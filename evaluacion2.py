@@ -104,26 +104,76 @@ print(df[['student_id', 'predicted_gpa']].head())
 
 # Pregunta 3 :¿Qué tan importante es la situación de beca en el rendimiento académico de los estudiantes?
 
-# Gráfico de barras para el promedio de predicted_gpa según situación de beca
-plt.figure(figsize=(8, 5))
-sns.barplot(x='is_scholarship_holder', y='predicted_gpa', data=df, ci=None)
-plt.xticks([0, 1], ['No Becado', 'Becado'])
-plt.title("Promedio de Predicted GPA según Situación de Beca")
-plt.xlabel("Situación de Beca")
-plt.ylabel("Promedio de Predicted GPA")
+# # Gráfico de barras para el promedio de predicted_gpa según situación de beca
+# plt.figure(figsize=(8, 5))
+# sns.barplot(x='is_scholarship_holder', y='predicted_gpa', data=df, ci=None)
+# plt.xticks([0, 1], ['No Becado', 'Becado'])
+# plt.title("Promedio de Predicted GPA según Situación de Beca")
+# plt.xlabel("Situación de Beca")
+# plt.ylabel("Promedio de Predicted GPA")
+# plt.show()
+
+# # Gráfico de barras del coeficiente de situación de beca comparado con otros factores
+# plt.figure(figsize=(8, 5))
+# coef_data = {
+#     'Factor': ['Rendimiento Previo', 'Asistencia a Clases', 'Visitas a la Biblioteca', 'Situación de Beca'],
+#     'Coeficiente': [0.00508, 0.19803, 0.01903, -0.0038]
+# }
+# coef_df = pd.DataFrame(coef_data)
+# sns.barplot(x='Factor', y='Coeficiente', data=coef_df)
+# plt.title("Comparación de Coeficientes de Regresión para Factores Clave")
+# plt.ylabel("Coeficiente de Regresión")
+# plt.show()
+
+
+# Pregunta 4 no requiere graficos. Solo interpretacion de los datos anteriores.
+
+
+# Pregunta 5. ¿Cómo afecta la dedicación a actividades sociales al rendimiento académico, y cómo se compara su impacto con el de las visitas a la biblioteca? 
+
+# # Gráfico de barras para comparar los coeficientes
+# plt.figure(figsize=(8, 5))
+# coef_data = {
+#     'Factor': ['Actividades Sociales', 'Visitas a la Biblioteca'],
+#     'Coeficiente': [-0.00473, 0.01903]
+# }
+# coef_df = pd.DataFrame(coef_data)
+# sns.barplot(x='Factor', y='Coeficiente', data=coef_df)
+# plt.title("Impacto Comparativo de Actividades Sociales y Visitas a la Biblioteca")
+# plt.ylabel("Coeficiente de Regresión")
+# plt.show()
+
+# # Gráficos de dispersión con líneas de regresión
+# fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# # Actividades Sociales vs Predicted GPA
+# sns.regplot(x='social_activities', y='predicted_gpa', data=df, ax=axes[0], line_kws={"color": "red"})
+# axes[0].set_title("Actividades Sociales vs. Predicted GPA")
+# axes[0].set_xlabel("Horas de Actividades Sociales")
+# axes[0].set_ylabel("Predicted GPA")
+
+# # Visitas a la Biblioteca vs Predicted GPA
+# sns.regplot(x='library_visits', y='predicted_gpa', data=df, ax=axes[1], line_kws={"color": "red"})
+# axes[1].set_title("Visitas a la Biblioteca vs. Predicted GPA")
+# axes[1].set_xlabel("Visitas a la Biblioteca")
+
+# plt.tight_layout()
+# plt.show()
+
+# Pregunta 6. 
+
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+
+# Scatter plot de Asistencia, Horas de Estudio, y Predicted GPA
+ax.scatter(df['class_attendance'], df['study_hours'], df['predicted_gpa'], c='b', marker='o')
+ax.set_title("Influencia Combinada de Asistencia a Clases y Horas de Estudio en Predicted GPA")
+ax.set_xlabel("Asistencia a Clases (%)")
+ax.set_ylabel("Horas de Estudio")
+ax.set_zlabel("Predicted GPA")
+
 plt.show()
 
-# Gráfico de barras del coeficiente de situación de beca comparado con otros factores
-plt.figure(figsize=(8, 5))
-coef_data = {
-    'Factor': ['Rendimiento Previo', 'Asistencia a Clases', 'Visitas a la Biblioteca', 'Situación de Beca'],
-    'Coeficiente': [0.00508, 0.19803, 0.01903, -0.0038]
-}
-coef_df = pd.DataFrame(coef_data)
-sns.barplot(x='Factor', y='Coeficiente', data=coef_df)
-plt.title("Comparación de Coeficientes de Regresión para Factores Clave")
-plt.ylabel("Coeficiente de Regresión")
-plt.show()
 
 # Cerrar la conexión
 engine.dispose()
